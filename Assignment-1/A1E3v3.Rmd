@@ -1,0 +1,52 @@
+---
+title: "A1E3v2 IOSlides"
+author: "Narayan"
+date: "9/15/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+
+## 
+
+
+
+### Slide with bullet points
+- I am Narayan.
+- This is my first slide in RStudio IOSlides.
+
+## 
+
+### Graph of Gapminder data
+
+```{r, echo = FALSE, message =FALSE, warning = FALSE}
+library(gapminder)
+library(ggplot2)
+data(gapminder)
+ggplot(gapminder,aes(x = year, y=lifeExp))+
+  geom_point()
+```
+
+
+
+## Slide with R Output
+
+```{r gapminder, echo = TRUE}
+summary(gapminder)
+```
+
+
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
