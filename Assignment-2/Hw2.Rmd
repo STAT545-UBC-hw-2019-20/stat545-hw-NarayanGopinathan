@@ -64,3 +64,73 @@ gapminder  %>%
         scale_x_log10("GDP per capita", labels = scales::dollar_format())
 ```
 
+Homework 2 Code
+---
+title: 'Homework 2'
+author: "Narayan Gopinathan"
+date: "September 20, 2019"
+output: 
+  html_document:
+
+---
+
+```{r, warning = FALSE, echo = FALSE}
+library(gapminder)
+library(tidyverse)
+
+```
+
+# Exercise 1
+
+## 1.1
+
+```{r}
+gapminder %>%
+  filter(year >= 1970) %>%
+  filter(year < 1980) %>%
+  filter(country =='United States'|country=='Canada'|country=='Mexico')
+```
+
+## 1.2
+
+```{r}
+gapminder %>%
+  filter(year >= 1970) %>%
+  filter(year < 1980) %>%
+  filter(country =='United States'|country=='Canada'|country=='Mexico') %>%
+  select(country, gdpPercap)
+
+
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format())
+
+## 1.5
+
+```{r fig.width = 5, fig.height = 2}
+gapminder %>%
+  filter(country == 'Canada') %>%
+  select(lifeExp, gdpPercap) %>%
+    ggplot(aes(gdpPercap, lifeExp))+
+      geom_point(alpha = 0.1) + 
+      scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+      
+# Exercise 2
+
+```{r}
+
+```
+
+# Exercise 3
+
+```{r fig.width = 5, fig.height = 2}
+gapminder  %>%
+  select(lifeExp, year) %>%
+    ggplot(aes(year, lifeExp))+
+    geom_point(alpha = 0.1)
+        scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+
+
+
