@@ -85,7 +85,10 @@ Ex2 %>%
 ```
 ## It appears that among African countries after 1990, the GDP per capita ranged from 241.17 to 14722.84 USD, with a mean value of $2587.25. The average did go up over time, but the range remained huge.  
 
+<<<<<<< HEAD
 ##3
+=======
+# Exercise 3
 
 ```{r fig.width = 5, fig.height = 2}
 gapminder  %>%
@@ -94,3 +97,84 @@ gapminder  %>%
     geom_point(alpha = 0.1)
         scale_x_log10("GDP per capita", labels = scales::dollar_format())
 ```
+
+Homework 2 Code
+---
+title: 'Homework 2'
+author: "Narayan Gopinathan"
+date: "September 20, 2019"
+output: 
+  html_document:
+
+---
+
+```{r, warning = FALSE, echo = FALSE}
+library(gapminder)
+library(tidyverse)
+
+```
+
+# Exercise 1
+
+## 1.1
+
+```{r}
+gapminder %>%
+  filter(year >= 1970) %>%
+  filter(year < 1980) %>%
+  filter(country =='United States'|country=='Canada'|country=='Mexico')
+```
+
+## 1.2
+
+```{r}
+gapminder %>%
+  filter(year >= 1970) %>%
+  filter(year < 1980) %>%
+  filter(country =='United States'|country=='Canada'|country=='Mexico') %>%
+  select(country, gdpPercap)
+
+
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format())
+
+## 1.5
+
+```{r fig.width = 5, fig.height = 2}
+gapminder %>%
+  filter(country == 'Canada') %>%
+  select(lifeExp, gdpPercap) %>%
+    ggplot(aes(gdpPercap, lifeExp))+
+      geom_point(alpha = 0.1) + 
+      scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+      
+# Exercise 2
+
+```{r}
+>>>>>>> 59d3a7ddb83b0b34a25f89681da211cfc55c929e
+
+```{r fig.width = 5, fig.height = 2}
+gapminder  %>%
+  select(lifeExp, year) %>%
+    ggplot(aes(year, lifeExp))+
+    geom_point(alpha = 0.1)
+        scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+<<<<<<< HEAD
+=======
+
+# Exercise 3
+
+```{r fig.width = 5, fig.height = 2}
+gapminder  %>%
+  select(lifeExp, year) %>%
+    ggplot(aes(year, lifeExp))+
+    geom_point(alpha = 0.1)
+        scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+
+
+
+>>>>>>> 59d3a7ddb83b0b34a25f89681da211cfc55c929e
