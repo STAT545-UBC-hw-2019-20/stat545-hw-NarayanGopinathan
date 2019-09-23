@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Assignment-2/Hw2.Rmd
 ---
 title: 'Homework 2'
 author: "Narayan Gopinathan"
@@ -178,3 +179,102 @@ gapminder  %>%
 
 
 >>>>>>> 59d3a7ddb83b0b34a25f89681da211cfc55c929e
+=======
+---
+title: 'Homework 2'
+author: "Narayan Gopinathan"
+date: "September 20, 2019"
+output: 
+  html_document:
+
+---
+
+```{r, warning = FALSE, echo = FALSE}
+library(gapminder)
+library(tidyverse)
+
+```
+
+# Exercise 1
+
+## 1.1
+
+```{r}
+gapminder %>%
+  filter(year >= 1970) %>%
+  filter(year < 1980) %>%
+  filter(country =='United States'|country=='Canada'|country=='Mexico')
+```
+
+## 1.2
+
+```{r}
+gapminder %>%
+  filter(year >= 1970) %>%
+  filter(year < 1980) %>%
+  filter(country =='United States'|country=='Canada'|country=='Mexico') %>%
+  select(country, gdpPercap)
+```
+
+## 1.3
+
+```{r}
+gapminder %>%
+  select(country, year, lifeExp) %>%
+  group_by(country) %>%
+  mutate(lifeExpdiff = c(NA, diff(lifeExp, lag=1))) %>%
+  filter(lifeExpdiff<0)
+```
+
+## 1.4
+
+```{r}
+gapminder %>%
+    group_by(country) %>%
+      filter(gdpPercap == max(gdpPercap))
+```
+
+## 1.5
+
+```{r fig.width = 5, fig.height = 2}
+gapminder %>%
+  filter(country == 'Canada') %>%
+  select(lifeExp, gdpPercap) %>%
+    ggplot(aes(gdpPercap, lifeExp))+
+      geom_point(alpha = 0.1)+
+        scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+
+# 2: Explore variables with dpylr
+Let's see how GDP per capita varies by year by country in Africa after 1990.
+
+
+```{r}
+Ex2 <- gapminder %>%
+  select(country, continent, year, gdpPercap) %>%
+  filter(continent == 'Africa') %>%
+  filter(year > 1990)
+  
+mean(Ex2$gdpPercap)
+
+Ex2 %>%
+  select(gdpPercap) %>%
+  range()
+
+Ex2 %>%
+  ggplot(aes(year, gdpPercap))+
+      geom_point(alpha = 0.1)+
+      scale_y_log10("GDP per capita", labels = scales::dollar_format())
+```
+## It appears that among African countries after 1990, the GDP per capita ranged from 241.17 to 14722.84 USD, with a mean value of $2587.25. The average did go up over time, but the range remained huge.  
+
+##3
+
+```{r fig.width = 5, fig.height = 2}
+gapminder  %>%
+  select(lifeExp, year) %>%
+    ggplot(aes(year, lifeExp))+
+    geom_point(alpha = 0.1)
+        scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+>>>>>>> afaa4d6fdf56144f744d8a52019bf0f7a437a265:Hw2.Rmd
