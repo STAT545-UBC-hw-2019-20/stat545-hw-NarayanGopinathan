@@ -1,0 +1,63 @@
+---
+title: "HW3"
+author: "Narayan"
+date: "9/28/2019"
+output: html_document
+---
+
+```{r, warning = FALSE, echo = FALSE}
+library(gapminder)
+library(tidyverse)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+# Task Option 2 
+```{r}
+gapminder %>%
+    group_by(continent) %>%
+    select(country, continent, gdpPercap, year) %>%
+       filter(gdpPercap == max(gdpPercap))
+```
+The above represent the maximum GDP per capita on each continent. The below represent the minimum GDP per capita on each continent. 
+```{r}
+gapminder %>%
+    group_by(continent) %>%
+    select(country, continent, gdpPercap, year) %>%
+       filter(gdpPercap == min(gdpPercap))
+```
+## Task Option 5 
+```{r, fig.width = 10, fig.height = 2}
+ggplot(gapminder, aes(year, lifeExp)) +
+  geom_point(alpha = 0.2) +
+  facet_wrap(~continent)
+```
+As a result of these graphs, we can clearly see that life  expectancy has increased over time in every continent. No country has a life expectancy above 90, due to the natural limitations of human biology, but there has been wide variation below that limit. Africa and Asia have the biggest ranges, while Europe and Oceania have more uniformly high life expectancies due to higher levels of wealth. In Africa, no country had a life  expectancy above 60 in 1957, while now many countries do. Conversely, in Oceania, no country has ever had a life expectancy below 60 (within the timeframe of this dataset).
+
+## Task Option 6
+```{r}
+gapminder %>%
+  filter(country =='Rwanda') %>%
+  select(year, gdpPercap, lifeExp, pop)
+```
+```{r fig.width = 5, fig.height = 2}
+gapminder %>%
+  filter(country == 'Rwanda') %>%
+  select(lifeExp, year) %>%
+    ggplot(aes(year, lifeExp))+
+   geom_line(alpha = 0.5)
+```
+```{r fig.width = 5, fig.height = 2}
+gapminder %>%
+  filter(country == 'Rwanda') %>%
+  select(gdpPercap, year) %>%
+    ggplot(aes(year, gdpPercap))+
+   geom_line(alpha = 0.5)
+```
+
+## The interesting story of Rwanda
+The history of Rwanda is very tragic. It had entrenched poverty and low life expectancies for the entire twentieth century, since it gained independence in 1962. However, in the early 1990s things got dramatically worse, as a civil war devolved into genocide. In 1994, the genocide struck and the country's life expectancy dropped dramatically, such that a baby born in 1992 could only expect to live 23.6  years. Rwanda's post-war recovery has been even more dramatic, and it is now a peaceful state with low crime and violence. By 2007 its life expectancy had exceeded its pre-genocide levels, and by 2016, it had increased to 67, according to World Bank data.
