@@ -10,7 +10,7 @@ library(gapminder)
 library(tidyverse)
 ```
 
-The link to the assignment on github pages can  be found (here)[https://stat545-ubc-hw-2019-20.github.io/stat545-hw-NarayanGopinathan/HW3.html]
+The link to the assignment on github pages can  be found [here](https://stat545-ubc-hw-2019-20.github.io/stat545-hw-NarayanGopinathan/HW3.html).
 
 ## R Markdown
 
