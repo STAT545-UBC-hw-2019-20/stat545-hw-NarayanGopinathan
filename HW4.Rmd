@@ -1,0 +1,107 @@
+---
+title: "HW4"
+author: "Narayan"
+date: "10/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning = FALSE, echo = FALSE}
+library(gapminder)
+library(tidyverse)
+
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Exercise 1: Univariate Option 1
+Let's compare two countries' life expectancy by year. For the sake of having a meaningful comparison, we can pick countries that are near each other, such as India, Pakistan, and Bangladesh.
+
+```{r}
+uni_wide <- gapminder %>%
+  filter(country == "India" | country == "Pakistan" | country == "Bangladesh") %>%
+  select(year, country, lifeExp) %>%
+  pivot_wider(id_cols = year, 
+              names_from = country, 
+              values_from = lifeExp) %>%
+  arrange(year)
+ 
+uni_wide %>%
+  select(year, "India_lifeExp" = India, "Pakistan_lifeExp" = Pakistan, "Bangladesh_lifeExp" = Bangladesh)
+```
+
+We can make a graph that compares the life expectancy of India and Paksitan. In doing so, we find that the countries' life expectancies increase in lockstep with each other.
+```{r, fig.align='center'}
+uni_wide %>%
+  ggplot(aes(x = India, y = Pakistan)) +
+  geom_point(colour = "blue", size = 2) +
+  ylab("Pakistan life expectancy (years)") +
+  xlab("India life expectancy (years)")
+```
+
+```{r, comment = NA}
+uni_wide %>%
+  pivot_longer(cols = (-year), 
+               names_to = "country", 
+               values_to = "lifeExp") %>%
+  arrange(country)
+```
+
+Exercise 2: Univariate Option 1
+```{r}
+multi_wide <- gapminder %>%
+  filter(country == "Japan" | country == "China") %>%
+  select(country, year, lifeExp, gdpPercap) %>%
+  pivot_wider(id_cols = year, 
+              names_from = country, 
+              values_from = c(lifeExp, gdpPercap)) %>%
+  arrange(year)
+multi_wide %>%
+  select(year, "Japan_lifeExp" = lifeExp_Japan, "China_lifeExp" = lifeExp_China, 
+         "Japan_gdp" = gdpPercap_Japan, "China_gdp" = gdpPercap_China)
+```
+```{r, comment = NA}
+multi_wide %>%
+  pivot_longer(cols = (-year), 
+               names_to = c(".value", "country"), 
+               names_sep = "_") %>%
+  arrange(country)
+```
+
+
+
+Exercise 3 
+```{r}
+guest <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/attend.csv")
+email <- read_csv("https://raw.githubusercontent.com/STAT545-UBC/Classroom/master/data/wedding/emails.csv")
+```
+
+#3.1 Let's make a table with the guest name in one column and the email  address in the next.
+```{r, comment = NA}
+email <- email %>% 
+  separate_rows(guest, sep = ", ") %>%
+  rename("name" = guest)
+DT::datatable(email)
+```
+
+# 3.2 Let's check if there are any emails we have which don't have corresponding guests on the guestlist. 
+```{r, comment = NA}
+email %>%
+  anti_join(guest, by = "name") %>%
+  knitr::kable()
+```
+
+# 3.3 Let's make a table and a guestlist that has all guests that we have emails for.
+```{r}
+guest %>%
+  full_join(email, by = "name") %>%
+  DT::datatable()
+```
