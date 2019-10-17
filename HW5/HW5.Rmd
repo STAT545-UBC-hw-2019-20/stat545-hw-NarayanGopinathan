@@ -1,0 +1,80 @@
+---
+title: "HW5"
+author: "Narayan"
+date: "10/14/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, warning = FALSE, echo = FALSE}
+library(gapminder)
+library(tidyverse)
+options(tinytex.verbose = TRUE)
+install.packages("tinytex")
+library(tinytex)
+tinytex::install_tinytex()
+```
+
+## Exercise 1
+## The here::here package, or here for short, is to find data from a computer’s hard drive and put it into R Studio. There are alternatives, such as setwd() and rm(list = ls()), but these don’t  work as well because they require the user to specify a set file path. For example, if I have a data file saved in a subfolder of my own hard drive, then I can specify that in the setwd file and that will enable R Studio to extract the data. The problem is that if I share the RStudio file with someone else and they try to use it on a different computer, they will not have the same file path, and they will have to redo that portion of code for the location of the file in their hard drive.
+
+## Conversely, the here::here package enables the user to extract a data file from R without specifying the file path. This means that you can use it in an R package that is going to be shared onto different computers, and the user on a different computer can use the same code, as long as they have downloaded the relevant file to their hard drive. 
+
+
+## Exercise 2 
+```{r}
+gapminder
+```
+
+```{r}
+gapminder %>%
+  filter(continent!='Oceania') %>%
+  droplevels()
+```
+## The entire Gapminder dataset has 1704 rows, but with Oceania filtered out, it has 1680. This is because the only Oceanan countries in this dataset are Australia and New Zealand; the smaller island nations are not part of it.
+
+## This will reorder the continents so that they are listed in order of frequency (i.e., the continents with the most countries), instead of alphabetical order.
+
+```{r}
+gapminder %>% 
+  group_by(country) %>%
+  summarize(max(lifeExp))
+```
+
+
+## Exercise 3
+```{r}
+write_csv(gapminder, here::here("gapminder.csv"))
+```
+
+```{r}
+read_csv("./sortedgapminder.csv") %>%
+  filter(year == 2007)
+```
+## I made a file of gapminder data, and saved it to CSV, and in Microsoft Excel, I filtered and sorted  data by life expectancy in 2007. Then I put it back into R using the read_csv package, and filtered it again to make sure that only the data from 2007 is showing. The data successfully survived the round trip. 
+
+
+## Exercise 4 
+## This is the original plot.
+```{r, fig.width = 10, fig.height = 2}
+ggplot(gapminder, aes(year, lifeExp)) +
+  geom_point(alpha = 0.9) +
+  facet_wrap(~continent)
+```
+## This is the revised plot with colour changed. I have changed the colour and the transparency so that the datapoints can be partially seen through, to make the data more clear.
+```{r, fig.width = 10, fig.height = 2}
+ggplot(gapminder, aes(year, lifeExp, colour="red")) +
+  geom_point(alpha = 0.2) +
+  facet_wrap(~continent)
+```
+## Exercise 5
+```{r}
+ggsave(filename = "life_expectancy_by_continent.png", plot = last_plot(), device = "png", path = NULL,
+  scale = 1, width = 10, height = 2, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = TRUE)
+```
